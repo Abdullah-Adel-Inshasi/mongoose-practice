@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const todoRoute = require("./routes/todo");
+const todoRoute = require("./routes/todos");
 const app = express();
 
 // connecting to mongoDB database and applying listeners on connection state
