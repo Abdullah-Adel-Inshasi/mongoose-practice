@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Todo = require("../models/todo");
 
+//
 const getTodo = async (req, res, next) => {
   try {
     const todo = await Todo.findById(req.params.id);
@@ -16,10 +17,13 @@ const getTodo = async (req, res, next) => {
 
 // Get all Todos
 router.get("/", async (req, res) => {
+  console.log("nice");
   try {
     const todos = await Todo.find();
     res.json(todos);
-  } catch (error) {}
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
 });
 
 // Get a specific todo
@@ -29,7 +33,12 @@ router.get("/:id", getTodo, (req, res) => {
 
 // create a new Todo
 router.post("/", async (req, res) => {
-  const todo = new Todo({ text: req.body.text });
+  const todo = new Todo({
+    title: req.body.title,
+    description: req.body.description,
+    dueDate: req.body.dueDate,
+  });
+
   try {
     const newTodo = await todo.save();
     res.status(201).json({ newTodo });
